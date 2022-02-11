@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="CartItem"
+            type="com.example.myapplication.viewmodel.CartViewModel" />
+    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="10sp"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="50sp"
+        android:src="@drawable/dummy"
+        android:id="@+id/imgItemCart"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/txtNameItem"
+        android:textSize="20sp"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10sp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="90"
+        android:id="@+id/txtPriceItem"
+        android:textSize="20sp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10sp"
+        android:layout_height="wrap_content"/>
+    <ImageButton
+        android:layout_width="50sp"
+        android:id="@+id/btnDeleteItem"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
+</layout>
