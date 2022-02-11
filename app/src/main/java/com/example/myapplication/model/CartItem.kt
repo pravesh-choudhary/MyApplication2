@@ -1,7 +1,15 @@
 package com.example.myapplication.model
 
-class CartItem(name: String, price: Int) {
-    var price:Int=price
-    var name:String = name
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "cart")
+data class CartItem(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "price") val price:Int,
+    @ColumnInfo(name="name") val name:String?
+) {
+
 
 }

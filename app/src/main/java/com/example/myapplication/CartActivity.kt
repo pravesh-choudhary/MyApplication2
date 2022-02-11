@@ -6,37 +6,48 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.adapter.BannerAdapter
 import com.example.myapplication.adapter.CartAdapter
 import com.example.myapplication.databinding.ActivityCartBinding
-import com.example.myapplication.databinding.ActivityHomeBinding
-import com.example.myapplication.repository.CartRepository
 import com.example.myapplication.viewModelFactory.CartFactory
-import com.example.myapplication.viewmodel.BannerViewModel
 import com.example.myapplication.viewmodel.CartViewModel
 import com.example.myapplication.model.CartItem
 
 private lateinit var binding: ActivityCartBinding
-var cartData=ArrayList<CartItem>()
+
 lateinit var cartViewModel: CartViewModel
 public val cartAdapter= CartAdapter()
 class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
-        binding=DataBindingUtil.setContentView(this,R.layout.activity_cart)
-        cartViewModel=ViewModelProvider(this,CartFactory(CartRepository())).get(CartViewModel::class.java)
-        binding.recycleCart.adapter= cartAdapter
 
-        cartViewModel.getCartItemsAll().value?.let { cartData.addAll(it) }
-        cartAdapter.setCartItems(cartData)
+        var cartDataList=ArrayList<CartItem>()
+        val name=intent.extras?.getString("name")
+        val price=intent.extras?.getInt("price")
+
+        val newcartItem= price?.let { CartItem(it,name) }
+
+        binding=DataBindingUtil.setContentView(this,R.layout.activity_cart)
+        cartViewModel=ViewModelProvider(this,CartFactory(application)).get(CartViewModel::class.java)
+        binding.recycleCart.adapter= cartAdapter
+        if (newcartItem != null) {
+            cartDataList.add(newcartItem)
+            cartAdapter.setCartItems(cartDataList)
+        }
+
 
         cartViewModel.cartItems.observe(this) {
-            cartData.addAll(it)
-            cartAdapter.setCartItems(it as ArrayList<CartItem>)
+            cartDataList= it as ArrayList<CartItem>
+            cartAdapter.setCartItems(it)
         }
+
+
         binding.recycleCart.layoutManager=LinearLayoutManager(this)
+        if (newcartItem != null) {
+            cartViewModel.cartRepository.insert(newcartItem)
+        }
         binding.btnCheckout.setOnClickListener{
+            cartViewModel.cartRepository.deleteAll()
             startActivity(Intent(this,SuccessActivity::class.java))
         }
 

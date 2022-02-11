@@ -13,7 +13,6 @@ import com.example.myapplication.databinding.ActivityHomeBinding
 import com.example.myapplication.repository.BannerRepository
 import com.example.myapplication.viewModelFactory.BannerFactory
 import com.example.myapplication.viewmodel.BannerViewModel
-import com.google.android.material.snackbar.Snackbar
 
 
 private lateinit var binding:ActivityHomeBinding

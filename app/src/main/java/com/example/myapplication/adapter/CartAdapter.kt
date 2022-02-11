@@ -16,7 +16,7 @@ class CartAdapter :RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
         return CartViewHolder(binding)
     }
 
-    public fun setCartItems(lst:ArrayList<CartItem>){
+    public fun setCartItems(lst:List<CartItem>){
         cartitems.addAll(lst)
         notifyDataSetChanged()
     }
@@ -25,6 +25,9 @@ class CartAdapter :RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
         var cart=cartitems.get(position)
         holder.binding.txtNameItem.text=cart.name
         holder.binding.txtPriceItem.text=cart.price.toString()
+        holder.binding.btnDeleteItem.setOnClickListener{
+
+        }
     }
 
     override fun getItemCount(): Int {
