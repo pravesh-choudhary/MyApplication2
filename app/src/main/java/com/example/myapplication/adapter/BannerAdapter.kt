@@ -15,7 +15,7 @@ import com.example.myapplication.model.CartItem
 public class BannerAdapter: RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
     val banners= ArrayList<String>()
-    public lateinit var listener:onItemClickListener
+    lateinit var listener:onItemClickListener
 
     public fun setOnItemClickListener(listener: onItemClickListener){
         this.listener=listener

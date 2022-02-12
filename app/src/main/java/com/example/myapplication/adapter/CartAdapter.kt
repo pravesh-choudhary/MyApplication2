@@ -6,9 +6,15 @@ import androidx.compose.ui.layout.Layout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.CartItemLayoutBinding
 import com.example.myapplication.model.CartItem
+import com.example.myapplication.room.CartDatabase
 
 class CartAdapter :RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
    val cartitems=ArrayList<CartItem>()
+    lateinit var listener:onDeleteItemClickListener
+
+    public fun setOnDeleteItemClickListener(listener: onDeleteItemClickListener){
+        this.listener=listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         var layout= LayoutInflater.from(parent.context)
@@ -26,7 +32,9 @@ class CartAdapter :RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
         holder.binding.txtNameItem.text=cart.name
         holder.binding.txtPriceItem.text=cart.price.toString()
         holder.binding.btnDeleteItem.setOnClickListener{
-
+            listener.onItemClick(cart)
+            cartitems.remove(cart)
+            notifyDataSetChanged()
         }
     }
 
@@ -34,8 +42,13 @@ class CartAdapter :RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
         return cartitems.size
     }
 
+
     inner class CartViewHolder(var binding:CartItemLayoutBinding):RecyclerView.ViewHolder(binding.root){
 
     }
+}
+
+public interface onDeleteItemClickListener{
+    fun onItemClick(cartItem: CartItem)
 }
 

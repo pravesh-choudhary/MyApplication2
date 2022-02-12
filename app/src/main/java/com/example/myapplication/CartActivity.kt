@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.adapter.CartAdapter
+import com.example.myapplication.adapter.onDeleteItemClickListener
 import com.example.myapplication.databinding.ActivityCartBinding
 import com.example.myapplication.viewModelFactory.CartFactory
 import com.example.myapplication.viewmodel.CartViewModel
@@ -46,6 +47,13 @@ class CartActivity : AppCompatActivity() {
         if (newcartItem != null) {
             cartViewModel.cartRepository.insert(newcartItem)
         }
+
+        cartAdapter.setOnDeleteItemClickListener(object :onDeleteItemClickListener{
+            override fun onItemClick(cartItem: CartItem) {
+                cartViewModel.cartRepository.delete(cartItem)
+            }
+        })
+
         binding.btnCheckout.setOnClickListener{
             cartViewModel.cartRepository.deleteAll()
             startActivity(Intent(this,SuccessActivity::class.java))
