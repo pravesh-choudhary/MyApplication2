@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import com.example.myapplication.model.CartItem
 import com.example.myapplication.room.CartDao
 import com.example.myapplication.room.CartDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CartRepository(app: Application) {
     private val db=CartDatabase.getInstance(app)
@@ -20,7 +22,9 @@ class CartRepository(app: Application) {
     fun getAllCartItems():LiveData<List<CartItem>>{
         return cartItems
     }
-    fun deleteAll(){cartDao.deleteAll()}
+    fun deleteAll(){
+        cartDao.deleteAll()
+    }
 
 
 }

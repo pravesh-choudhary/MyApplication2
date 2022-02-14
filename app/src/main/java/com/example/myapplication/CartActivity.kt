@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.adapter.CartAdapter
@@ -30,6 +31,7 @@ class CartActivity : AppCompatActivity() {
 
         binding=DataBindingUtil.setContentView(this,R.layout.activity_cart)
         cartViewModel=ViewModelProvider(this,CartFactory(application)).get(CartViewModel::class.java)
+
         binding.recycleCart.adapter= cartAdapter
         if (newcartItem != null) {
             cartDataList.add(newcartItem)
@@ -56,6 +58,7 @@ class CartActivity : AppCompatActivity() {
 
         binding.btnCheckout.setOnClickListener{
             cartViewModel.cartRepository.deleteAll()
+            cartAdapter.cartitems.clear()
             startActivity(Intent(this,SuccessActivity::class.java))
         }
 
